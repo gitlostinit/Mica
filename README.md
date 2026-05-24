@@ -1,4 +1,4 @@
-# VaultPeek
+# Mica
 
 Free, native Obsidian vault viewer for iOS and macOS.
 
@@ -18,11 +18,11 @@ Free, native Obsidian vault viewer for iOS and macOS.
 ## Architecture
 
 ```
-VaultPeek/               iOS app target
-VaultPeekQuickLook/      macOS Quick Look Preview Extension
-VaultPeekThumbnail/      macOS Finder thumbnail extension
+Mica/               iOS app target
+MicaQuickLook/      macOS Quick Look Preview Extension
+MicaThumbnail/      macOS Finder thumbnail extension
 Shared/                  Swift Package — shared rendering core
-  Sources/VaultPeekCore/
+  Sources/MicaCore/
     Parsing/             Markdown AST, wikilink resolver, frontmatter
     Rendering/           SwiftUI visitors, callout renderer, HTML generator
     Vault/               iCloud access, file index, backlink index, FTS5 search
@@ -40,4 +40,4 @@ Shared/                  Swift Package — shared rendering core
 
 Requires Xcode 16+, iOS 17+ deployment target, macOS 14+ for the extension.
 
-Open `VaultPeek.xcodeproj` and select the scheme you want to build.
+Open `Mica.xcodeproj` and select the scheme you want to build.

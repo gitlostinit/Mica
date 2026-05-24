@@ -2,13 +2,13 @@
 import PackageDescription
 
 let package = Package(
-    name: "VaultPeekCore",
+    name: "MicaCore",
     platforms: [
         .iOS(.v17),
         .macOS(.v14),
     ],
     products: [
-        .library(name: "VaultPeekCore", targets: ["VaultPeekCore"]),
+        .library(name: "MicaCore", targets: ["MicaCore"]),
     ],
     dependencies: [
         .package(url: "https://github.com/swiftlang/swift-markdown.git", from: "0.4.0"),
@@ -17,18 +17,18 @@ let package = Package(
     ],
     targets: [
         .target(
-            name: "VaultPeekCore",
+            name: "MicaCore",
             dependencies: [
                 .product(name: "Markdown", package: "swift-markdown"),
                 .product(name: "Yams", package: "Yams"),
                 .product(name: "GRDB", package: "GRDB.swift"),
             ],
-            path: "Sources/VaultPeekCore"
+            path: "Sources/MicaCore"
         ),
         .testTarget(
-            name: "VaultPeekCoreTests",
-            dependencies: ["VaultPeekCore"],
-            path: "Tests/VaultPeekCoreTests"
+            name: "MicaCoreTests",
+            dependencies: ["MicaCore"],
+            path: "Tests/MicaCoreTests"
         ),
     ]
 )

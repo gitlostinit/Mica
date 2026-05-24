@@ -4,8 +4,8 @@ import Foundation
 public enum WikilinkPreprocessor {
 
     /// Transforms raw Obsidian markdown into preprocessed markdown.
-    /// - Wikilinks: [[Note]] → [Note](vaultpeek://note/Note)
-    /// - Wikilinks with alias: [[Note|Alias]] → [Alias](vaultpeek://note/Note)
+    /// - Wikilinks: [[Note]] → [Note](mica://note/Note)
+    /// - Wikilinks with alias: [[Note|Alias]] → [Alias](mica://note/Note)
     /// - Highlights: ==text== → <mark>text</mark>
     /// - Inline tags left as-is (rendered by visitor)
     public static func process(_ raw: String) -> String {
@@ -27,7 +27,7 @@ public enum WikilinkPreprocessor {
             let alias = match.3.map(String.init)
             let encoded = target.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? target
             let label = alias ?? target
-            return "[\(label)](vaultpeek://note/\(encoded))"
+            return "[\(label)](mica://note/\(encoded))"
         }
     }
 

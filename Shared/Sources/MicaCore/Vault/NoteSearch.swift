@@ -17,7 +17,7 @@ public actor NoteSearch {
     public init() {}
 
     public func setup(appSupportURL: URL) throws {
-        let dbURL = appSupportURL.appendingPathComponent("VaultPeek.sqlite")
+        let dbURL = appSupportURL.appendingPathComponent("Mica.sqlite")
         db = try DatabaseQueue(path: dbURL.path)
         try db?.write { db in
             try db.execute(sql: """

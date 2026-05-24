@@ -69,8 +69,8 @@ public struct HTMLRenderer: MarkupVisitor {
     public mutating func visitLink(_ link: Link) -> String {
         let dest = link.destination ?? ""
         let label = link.children.map { visit($0) }.joined()
-        if dest.hasPrefix("vaultpeek://note/") {
-            let encoded = dest.dropFirst("vaultpeek://note/".count)
+        if dest.hasPrefix("mica://note/") {
+            let encoded = dest.dropFirst("mica://note/".count)
             let name = encoded.removingPercentEncoding ?? String(encoded)
             return "<a class=\"wikilink\" href=\"\(dest)\">\(escapeHTML(name))</a>"
         }
