@@ -24,6 +24,7 @@
 		9F7958C5FED9CF8908FEF1EE /* MicaThumbnail.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = F51149C41116C0F3600ACABC /* MicaThumbnail.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		B64B848C633C5C1E912B4DA9 /* MicaApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E79379837FC2A181B0FD445 /* MicaApp.swift */; };
 		C95FB9713784023621FCA65E /* MicaMacApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE15A21433A2F5DEEB87A485 /* MicaMacApp.swift */; };
+		D12D4D84314034404D0EE286 /* MicaCoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F62D237AEAC1817FDFB733A /* MicaCoreTests.swift */; };
 		E66556F5422F4FBA9F1A2B71 /* ThumbnailProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D93BE86A24075C050F3556 /* ThumbnailProvider.swift */; };
 		F64CB2FAB77361C5E7D008EB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7256DEB6A78D4250EE506289 /* Assets.xcassets */; };
 		FBC1F4A42A17D0D4257C19C8 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7D73BEF9FB77546207B98DF /* MainView.swift */; };
@@ -68,6 +69,7 @@
 		2CECE54B4B3E6DA9636EA437 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		31AD7626662277BBDC2CDBAB /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		3E04E5BADB208F08BED68860 /* VaultPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VaultPickerView.swift; sourceTree = "<group>"; };
+		3F62D237AEAC1817FDFB733A /* MicaCoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MicaCoreTests.swift; sourceTree = "<group>"; };
 		58D93BE86A24075C050F3556 /* ThumbnailProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThumbnailProvider.swift; sourceTree = "<group>"; };
 		655708AE9099061CBE84EC9F /* MicaMac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MicaMac.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6681251179C6D4C416053540 /* NoteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteView.swift; sourceTree = "<group>"; };
@@ -158,11 +160,11 @@
 			isa = PBXGroup;
 			children = (
 				A3AEB79C6B8564B2F6BE23FC /* Mica */,
+				E287685DE42F1E4E5BB1EE14 /* MicaCoreTests */,
 				CEDF58B8F58A424129CFC8A1 /* MicaMac */,
 				656BC407A9D7D450B0C431D4 /* MicaQuickLook */,
 				9E6920C1529CB3E8696DB198 /* MicaThumbnail */,
 				7B7AC46EA91376CE78B9C88C /* Packages */,
-				CD790F561BBE8BF5438DE24E /* VaultPeekCoreTests */,
 				831617134CF0D75ADA33F1C6 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -205,14 +207,6 @@
 			path = Mica;
 			sourceTree = "<group>";
 		};
-		CD790F561BBE8BF5438DE24E /* VaultPeekCoreTests */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = VaultPeekCoreTests;
-			path = Shared/Tests/VaultPeekCoreTests;
-			sourceTree = "<group>";
-		};
 		CEDF58B8F58A424129CFC8A1 /* MicaMac */ = {
 			isa = PBXGroup;
 			children = (
@@ -234,6 +228,15 @@
 				3E04E5BADB208F08BED68860 /* VaultPickerView.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		E287685DE42F1E4E5BB1EE14 /* MicaCoreTests */ = {
+			isa = PBXGroup;
+			children = (
+				3F62D237AEAC1817FDFB733A /* MicaCoreTests.swift */,
+			);
+			name = MicaCoreTests;
+			path = Shared/Tests/MicaCoreTests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -431,6 +434,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D12D4D84314034404D0EE286 /* MicaCoreTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -525,6 +529,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -545,6 +550,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MARKETING_VERSION = 0.1.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -690,6 +696,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = "";
 				ENABLE_NS_ASSERTIONS = NO;
@@ -704,6 +711,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MARKETING_VERSION = 0.1.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";

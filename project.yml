@@ -21,6 +21,8 @@ settings:
   base:
     SWIFT_VERSION: "5.10"
     DEVELOPMENT_TEAM: ""
+    CURRENT_PROJECT_VERSION: "1"
+    MARKETING_VERSION: "0.1.0"
 
 targets:
 
@@ -111,7 +113,7 @@ targets:
     platform: iOS
     deploymentTarget: "17.0"
     sources:
-      - Shared/Tests/VaultPeekCoreTests
+      - Shared/Tests/MicaCoreTests
     dependencies:
       - package: MicaCore
     settings:
