@@ -81,9 +81,9 @@
 		B2ABB7828905EFF02B5D5FC2 /* MicaQuickLook.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = MicaQuickLook.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		B7D73BEF9FB77546207B98DF /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		B8C9CAE34EF65C7787D8D1D5 /* SearchResultsList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsList.swift; sourceTree = "<group>"; };
-		CE79D134DFF812AD38BC459E /* Mica.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = Mica.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		CE79D134DFF812AD38BC459E /* Mica.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Mica.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D8FF2A9490D12EE115FA5AA9 /* BacklinkPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BacklinkPanel.swift; sourceTree = "<group>"; };
-		DECE687E5B4D36B33F6AFD9D /* Shared */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Shared; path = Shared; sourceTree = SOURCE_ROOT; };
+		DECE687E5B4D36B33F6AFD9D /* Shared */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Shared; sourceTree = SOURCE_ROOT; };
 		F51149C41116C0F3600ACABC /* MicaThumbnail.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = MicaThumbnail.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -360,9 +360,6 @@
 					A3B9B28A45811741EC0741D9 = {
 						DevelopmentTeam = "";
 					};
-					AC87DEB14DD62BA99EE89F9B = {
-						DevelopmentTeam = "";
-					};
 					F324878802FC6F94C27DF3F6 = {
 						DevelopmentTeam = "";
 					};
@@ -616,6 +613,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Mica/Mica.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEVELOPMENT_TEAM = 79XPJ6FS73;
 				INFOPLIST_FILE = Mica/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -727,6 +725,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Mica/Mica.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEVELOPMENT_TEAM = 79XPJ6FS73;
 				INFOPLIST_FILE = Mica/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
