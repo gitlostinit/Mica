@@ -1,121 +1,100 @@
 import Foundation
 import Markdown
 
-/// Converts preprocessed Obsidian markdown to HTML for the Quick Look extension.
-public struct HTMLRenderer: MarkupVisitor {
-
-    public typealias Result = String
+/// Converts preprocessed Obsidian markdown to HTML.
+public final class HTMLRenderer {
 
     public init() {}
 
     public func render(_ document: Document) -> String {
-        visit(document)
+        renderChildren(of: document)
     }
 
-    public func defaultVisit(_ markup: any Markup) -> String {
-        markup.children.map { visit($0) }.joined()
+    // MARK: - Node dispatch
+
+    private func renderNode(_ node: any Markup) -> String {
+        switch node {
+        case let n as Document:         return renderChildren(of: n)
+        case let n as Heading:          return renderHeading(n)
+        case let n as Paragraph:        return "<p>\(renderChildren(of: n))</p>\n"
+        case let n as Text:             return esc(n.string)
+        case let n as Strong:           return "<strong>\(renderChildren(of: n))</strong>"
+        case let n as Emphasis:         return "<em>\(renderChildren(of: n))</em>"
+        case let n as Strikethrough:    return "<del>\(renderChildren(of: n))</del>"
+        case let n as InlineCode:       return "<code>\(esc(n.code))</code>"
+        case let n as CodeBlock:        return renderCodeBlock(n)
+        case let n as BlockQuote:       return renderBlockQuote(n)
+        case let n as Link:             return renderLink(n)
+        case let n as Image:            return renderImage(n)
+        case let n as UnorderedList:    return "<ul>\n\(renderChildren(of: n))</ul>\n"
+        case let n as OrderedList:      return "<ol>\n\(renderChildren(of: n))</ol>\n"
+        case let n as ListItem:         return "<li>\(renderChildren(of: n))</li>\n"
+        case let n as HTMLBlock:        return n.rawHTML
+        case let n as InlineHTML:       return n.rawHTML
+        case is ThematicBreak:          return "<hr />\n"
+        case is SoftBreak:              return " "
+        case is LineBreak:              return "<br />"
+        default:                        return renderChildren(of: node)
+        }
     }
 
-    public mutating func visitDocument(_ document: Document) -> String {
-        document.children.map { visit($0) }.joined()
+    private func renderChildren(of node: any Markup) -> String {
+        var out = ""
+        for child in node.children { out += renderNode(child) }
+        return out
     }
 
-    public mutating func visitHeading(_ heading: Heading) -> String {
-        let level = heading.level
-        let content = heading.children.map { visit($0) }.joined()
-        return "<h\(level)>\(content)</h\(level)>\n"
+    // MARK: - Specific renderers
+
+    private func renderHeading(_ h: Heading) -> String {
+        let l = h.level
+        let content = renderChildren(of: h)
+        return "<h\(l)>\(content)</h\(l)>\n"
     }
 
-    public mutating func visitParagraph(_ paragraph: Paragraph) -> String {
-        let content = paragraph.children.map { visit($0) }.joined()
-        return "<p>\(content)</p>\n"
-    }
-
-    public mutating func visitText(_ text: Text) -> String {
-        escapeHTML(text.string)
-    }
-
-    public mutating func visitStrong(_ strong: Strong) -> String {
-        "<strong>\(strong.children.map { visit($0) }.joined())</strong>"
-    }
-
-    public mutating func visitEmphasis(_ emphasis: Emphasis) -> String {
-        "<em>\(emphasis.children.map { visit($0) }.joined())</em>"
-    }
-
-    public mutating func visitStrikethrough(_ s: Strikethrough) -> String {
-        "<del>\(s.children.map { visit($0) }.joined())</del>"
-    }
-
-    public mutating func visitInlineCode(_ code: InlineCode) -> String {
-        "<code>\(escapeHTML(code.code))</code>"
-    }
-
-    public mutating func visitCodeBlock(_ block: CodeBlock) -> String {
+    private func renderCodeBlock(_ block: CodeBlock) -> String {
         let lang = block.language ?? ""
         let cls = lang.isEmpty ? "" : " class=\"language-\(lang)\""
-        return "<pre><code\(cls)>\(escapeHTML(block.code))</code></pre>\n"
+        return "<pre><code\(cls)>\(esc(block.code))</code></pre>\n"
     }
 
-    public mutating func visitBlockQuote(_ quote: BlockQuote) -> String {
-        let lines = quote.debugDescription().components(separatedBy: "\n")
-        if let callout = CalloutParser.parse(blockquoteLines: lines) {
-            return renderCallout(callout)
+    private func renderBlockQuote(_ quote: BlockQuote) -> String {
+        // Extract raw text from first paragraph to detect callout syntax
+        if let firstPara = quote.children.first(where: { $0 is Paragraph }) as? Paragraph {
+            let rawText = firstPara.children
+                .compactMap { ($0 as? Text)?.string }
+                .joined()
+            let lines = rawText.components(separatedBy: "\n")
+            let syntheticLines = ["> \(lines.first ?? "")"] + lines.dropFirst().map { "> \($0)" }
+            if let callout = CalloutParser.parse(blockquoteLines: syntheticLines) {
+                return renderCallout(callout)
+            }
         }
-        let content = quote.children.map { visit($0) }.joined()
-        return "<blockquote>\(content)</blockquote>\n"
+        return "<blockquote>\(renderChildren(of: quote))</blockquote>\n"
     }
 
-    public mutating func visitLink(_ link: Link) -> String {
+    private func renderLink(_ link: Link) -> String {
         let dest = link.destination ?? ""
-        let label = link.children.map { visit($0) }.joined()
+        let label = renderChildren(of: link)
         if dest.hasPrefix("mica://note/") {
             let encoded = dest.dropFirst("mica://note/".count)
             let name = encoded.removingPercentEncoding ?? String(encoded)
-            return "<a class=\"wikilink\" href=\"\(dest)\">\(escapeHTML(name))</a>"
+            return "<a class=\"wikilink\" href=\"\(dest)\">\(esc(name))</a>"
         }
-        return "<a href=\"\(escapeHTML(dest))\">\(label)</a>"
+        return "<a href=\"\(esc(dest))\">\(label)</a>"
     }
 
-    public mutating func visitImage(_ image: Image) -> String {
-        let src = image.source ?? ""
-        let alt = image.title ?? ""
-        return "<img src=\"\(escapeHTML(src))\" alt=\"\(escapeHTML(alt))\" />"
+    private func renderImage(_ image: Image) -> String {
+        "<img src=\"\(esc(image.source ?? ""))\" alt=\"\(esc(image.title ?? ""))\" />"
     }
-
-    public mutating func visitUnorderedList(_ list: UnorderedList) -> String {
-        "<ul>\n\(list.children.map { visit($0) }.joined())</ul>\n"
-    }
-
-    public mutating func visitOrderedList(_ list: OrderedList) -> String {
-        "<ol>\n\(list.children.map { visit($0) }.joined())</ol>\n"
-    }
-
-    public mutating func visitListItem(_ item: ListItem) -> String {
-        "<li>\(item.children.map { visit($0) }.joined())</li>\n"
-    }
-
-    public mutating func visitThematicBreak(_ br: ThematicBreak) -> String {
-        "<hr />\n"
-    }
-
-    public mutating func visitSoftBreak(_ br: SoftBreak) -> String { " " }
-    public mutating func visitLineBreak(_ br: LineBreak) -> String { "<br />" }
-
-    public mutating func visitHTMLBlock(_ block: HTMLBlock) -> String { block.rawHTML }
-    public mutating func visitInlineHTML(_ html: InlineHTML) -> String { html.rawHTML }
-
-    // MARK: - Callouts
 
     private func renderCallout(_ callout: Callout) -> String {
         let title = callout.title ?? callout.type.rawValue.capitalized
-        let color = callout.type.colorHex
-        let icon = callout.type.sfSymbol
         return """
-        <div class="callout" style="border-left-color:\(color)" data-type="\(callout.type.rawValue)">
-          <div class="callout-title" style="color:\(color)">
-            <span class="callout-icon" data-sf="\(icon)"></span>
-            <span>\(escapeHTML(title))</span>
+        <div class="callout" style="border-left-color:\(callout.type.colorHex)" data-type="\(callout.type.rawValue)">
+          <div class="callout-title" style="color:\(callout.type.colorHex)">
+            <span class="callout-icon" data-sf="\(callout.type.sfSymbol)"></span>
+            <span>\(esc(title))</span>
           </div>
           <div class="callout-body">\(callout.body)</div>
         </div>\n
@@ -124,7 +103,7 @@ public struct HTMLRenderer: MarkupVisitor {
 
     // MARK: - Helpers
 
-    private func escapeHTML(_ s: String) -> String {
+    private func esc(_ s: String) -> String {
         s.replacingOccurrences(of: "&", with: "&amp;")
          .replacingOccurrences(of: "<", with: "&lt;")
          .replacingOccurrences(of: ">", with: "&gt;")

@@ -11,7 +11,7 @@ class PreviewProvider: QLPreviewProvider, QLPreviewingController {
         let (fm, body) = FrontmatterParser.parse(raw)
         let preprocessed = WikilinkPreprocessor.process(body)
         let doc = Document(parsing: preprocessed)
-        var renderer = HTMLRenderer()
+        let renderer = HTMLRenderer()
         let html = renderer.render(doc)
         let title = fm.title ?? url.deletingPathExtension().lastPathComponent
         let fullHTML = HTMLTemplate.wrap(html, title: title)

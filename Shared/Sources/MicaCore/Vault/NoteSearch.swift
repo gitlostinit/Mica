@@ -56,7 +56,7 @@ public actor NoteSearch {
             for await result in group {
                 guard let (note, body) = result else { continue }
                 let (_, cleanBody) = FrontmatterParser.parse(body)
-                try? db.write { db in
+                try? await db.write { db in
                     try db.execute(
                         sql: "INSERT OR REPLACE INTO notes(url, title, path, body, modified) VALUES (?,?,?,?,?)",
                         arguments: [

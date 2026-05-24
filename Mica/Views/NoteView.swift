@@ -70,7 +70,7 @@ struct NoteWebView: UIViewRepresentable {
         let (fm, body) = FrontmatterParser.parse(raw)
         let preprocessed = WikilinkPreprocessor.process(body)
         let doc = Document(parsing: preprocessed)
-        var renderer = HTMLRenderer()
+        let renderer = HTMLRenderer()
         let html = renderer.render(doc)
         let title = fm.title ?? note.name
         return HTMLTemplate.wrap(frontmatterHTML(fm) + html, title: title)
