@@ -1,8 +1,8 @@
 # Mica
 
-A native, free markdown viewer for iOS and macOS.
+A native, free, open-source markdown viewer for iOS and macOS.
 
-Mica reads `.md` files and renders them beautifully. That's it. No editor, no sync, no account, no subscription, no vendor lock-in. Just a fast, native viewer for the markdown you already have.
+Mica reads `.md` files and renders them beautifully. That's it. No editor, no sync, no account, no subscription, no vendor lock-in. Just a fast, native viewer for the markdown you already have. Open source under the LICENSE in this repo.
 
 ## What it is
 
@@ -73,4 +73,8 @@ Mica is a mineral that splits into thin, perfectly flat sheets. That's the goal 
 
 ## License
 
-Free. See `LICENSE` for the legal version.
+Open source. See `LICENSE` for the legal version. Contributions welcome — file an issue or open a PR.
+
+## Contact
+
+For questions, feedback, or anything else: contactanthony@weddle.tv
